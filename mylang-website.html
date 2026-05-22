@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyLang — Code in Plain English</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c14;
+  --bg2: #0d1220;
+  --bg3: #111827;
+  --blue: #3b82f6;
+  --blue2: #1d4ed8;
+  --cyan: #06b6d4;
+  --glow: rgba(59,130,246,0.15);
+  --border: rgba(59,130,246,0.2);
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --code: #f472b6;
+  --green: #10b981;
+  --yellow: #f59e0b;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* BACKGROUND GRID */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 60px;
+  background: rgba(8,12,20,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--blue);
+  letter-spacing: -1px;
+}
+
+.nav-logo span { color: var(--cyan); }
+
+.nav-links { display: flex; gap: 36px; }
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.nav-btn {
+  background: var(--blue);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.nav-btn:hover { background: var(--blue2); transform: translateY(-1px); }
+
+/* HERO */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 60px 80px;
+  text-align: center;
+  z-index: 1;
+}
+
+.hero-glow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(59,130,246,0.1);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 12px;
+  color: var(--cyan);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 32px;
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--cyan);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+
+h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -3px;
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+
+h1 .accent { color: var(--blue); }
+h1 .accent2 { color: var(--cyan); }
+
+.hero-sub {
+  font-size: 20px;
+  color: var(--muted);
+  max-width: 560px;
+  margin: 0 auto 48px;
+  line-height: 1.7;
+  font-weight: 300;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 72px;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+
+.btn-primary {
+  background: var(--blue);
+  color: white;
+  border: none;
+  padding: 16px 36px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary:hover { background: var(--blue2); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(59,130,246,0.3); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 16px 36px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-outline:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
+
+/* HERO CODE WINDOW */
+.code-window {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: left;
+  box-shadow: 0 0 60px rgba(59,130,246,0.1);
+  animation: fadeUp 0.6s 0.4s ease both;
+}
+
+.code-header {
+  background: var(--bg3);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot-r { background: #ff5f57; }
+.dot-y { background: #febc2e; }
+.dot-g { background: #28c840; }
+
+.code-filename {
+  margin-left: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.code-body {
+  padding: 24px;
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.code-line { display: flex; gap: 16px; }
+.line-num { color: var(--muted); user-select: none; min-width: 16px; }
+.kw { color: var(--blue); }
+.str { color: var(--green); }
+.var { color: var(--cyan); }
+.comment { color: var(--muted); font-style: italic; }
+
+.code-output {
+  background: rgba(16,185,129,0.05);
+  border-top: 1px solid var(--border);
+  padding: 16px 24px;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: var(--green);
+}
+
+.code-output::before {
+  content: '▶ Output';
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+/* SECTIONS */
+section {
+  position: relative;
+  z-index: 1;
+  padding: 100px 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--blue);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.section-sub {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 60px;
+}
+
+/* FEATURES */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.feature-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.feature-card:hover {
+  border-color: var(--blue);
+  transform: translateY(-4px);
+}
+
+.feature-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.feature-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.feature-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* DIVIDER */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin: 0 60px;
+  max-width: calc(1100px - 0px);
+}
+
+/* DOCS */
+.docs-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
+}
+
+.docs-nav {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.docs-nav-title {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.docs-nav-item {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+  margin-bottom: 4px;
+}
+
+.docs-nav-item:hover, .docs-nav-item.active {
+  color: var(--text);
+  background: rgba(59,130,246,0.08);
+  border-left-color: var(--blue);
+}
+
+.docs-content { min-width: 0; }
+
+.doc-section {
+  margin-bottom: 56px;
+}
+
+.doc-section h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.doc-section h3 .tag {
+  background: rgba(59,130,246,0.15);
+  color: var(--blue);
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-family: 'Space Mono', monospace;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.doc-section p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.doc-code {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.doc-code-header {
+  background: var(--bg3);
+  padding: 10px 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.doc-code pre {
+  padding: 20px;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  line-height: 2;
+  overflow-x: auto;
+}
+
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.doc-table th {
+  background: var(--bg3);
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(59,130,246,0.08);
+  vertical-align: top;
+}
+
+.doc-table tr:hover td { background: rgba(59,130,246,0.03); }
+
+.doc-table code {
+  font-family: 'Space Mono', monospace;
+  color: var(--code);
+  font-size: 12px;
+  background: rgba(244,114,182,0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* CHALLENGES */
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.challenge-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.challenge-card:hover {
+  border-color: var(--blue);
+  transform: translateY(-3px);
+}
+
+.challenge-header {
+  padding: 24px 24px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.challenge-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 100px;
+  letter-spacing: 0.5px;
+}
+
+.badge-easy { background: rgba(16,185,129,0.15); color: var(--green); }
+.badge-medium { background: rgba(245,158,11,0.15); color: var(--yellow); }
+.badge-hard { background: rgba(239,68,68,0.15); color: #ef4444; }
+
+.challenge-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 0 24px 12px;
+}
+
+.challenge-desc {
+  padding: 0 24px 20px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.challenge-task {
+  margin: 0 24px 20px;
+  background: rgba(59,130,246,0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.challenge-task-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.challenge-task p {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.solution-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  border-top: 1px solid var(--border);
+  padding: 14px 24px;
+  color: var(--muted);
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.solution-toggle:hover { color: var(--blue); background: rgba(59,130,246,0.05); }
+
+.solution-toggle .arrow { transition: transform 0.2s; font-size: 10px; }
+.solution-toggle.open .arrow { transform: rotate(90deg); }
+
+.solution-body {
+  display: none;
+  padding: 0 24px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.solution-body.show { display: block; }
+
+.solution-body pre {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  line-height: 2;
+  overflow-x: auto;
+  margin-top: 16px;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 48px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.footer-logo span { color: var(--cyan); }
+
+.footer-text {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footer-text strong { color: var(--text); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* TYPING ANIMATION */
+.typing::after {
+  content: '|';
+  animation: blink 1s infinite;
+  color: var(--blue);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--blue); }
+
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  section { padding: 60px 24px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .docs-grid { grid-template-columns: 1fr; }
+  .docs-nav { display: none; }
+  .challenges-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 40px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">My<span>Lang</span></div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#docs">Docs</a>
+    <a href="#challenges">Challenges</a>
+  </div>
+  <button class="nav-btn" onclick="document.getElementById('docs').scrollIntoView({behavior:'smooth'})">Get Started →</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div>
+    <div class="hero-badge">v1.0 — Now Live</div>
+    <h1>Code in<br><span class="accent">Plain</span> <span class="accent2">English</span></h1>
+    <p class="hero-sub">MyLang is a beginner-friendly programming language. No Python, no Java — just simple words that anyone can write and run.</p>
+    <div class="hero-btns">
+      <a href="#docs" class="btn-primary">Read the Docs</a>
+      <a href="#challenges" class="btn-outline">Try Challenges</a>
+    </div>
+    <div class="code-window">
+      <div class="code-header">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="code-filename">hello.my</span>
+      </div>
+      <div class="code-body">
+        <div class="code-line"><span class="line-num">1</span><span><span class="kw">say</span> <span class="str">"Welcome to MyLang!"</span></span></div>
+        <div class="code-line"><span class="line-num">2</span><span><span class="kw">set</span> <span class="var">name</span> = <span class="str">"Ayesha"</span></span></div>
+        <div class="code-line"><span class="line-num">3</span><span><span class="kw">say</span> <span class="var">name</span></span></div>
+        <div class="code-line"><span class="line-num">4</span><span><span class="kw">ask</span> <span class="var">city</span> <span class="str">"Your city: "</span></span></div>
+        <div class="code-line"><span class="line-num">5</span><span><span class="kw">say</span> <span class="var">city</span></span></div>
+      </div>
+      <div class="code-output">Welcome to MyLang!<br>Ayesha<br>Your city: _</div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-label">Why MyLang</div>
+  <h2 class="section-title">Built for<br>Everyone</h2>
+  <p class="section-sub">Most programming languages are made for programmers. MyLang is made for humans.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">✍️</div>
+      <div class="feature-title">Plain English Syntax</div>
+      <div class="feature-desc">Write <code style="color:var(--code);font-family:monospace">say "Hello"</code> instead of <code style="color:var(--muted);font-family:monospace">print("Hello")</code>. Commands read like sentences.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Zero Setup for Users</div>
+      <div class="feature-desc">Just install MyLang once. After that, write a <code style="color:var(--code);font-family:monospace">.my</code> file and run it. No Python, no terminal knowledge needed.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">Python Powered</div>
+      <div class="feature-desc">Under the hood, MyLang runs on Python — so it's fast, reliable, and extendable. The user never needs to know.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">Beginner First</div>
+      <div class="feature-desc">No semicolons. No brackets. No confusing errors. Just clean, readable code that does exactly what you tell it.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🪟</div>
+      <div class="feature-title">Windows Native</div>
+      <div class="feature-desc">MyLang installs as a system command. Type <code style="color:var(--code);font-family:monospace">mylang file.my</code> from any folder, any terminal.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🚀</div>
+      <div class="feature-title">Evolving Language</div>
+      <div class="feature-desc">v1.0 supports say, set, and ask. More features coming: if/else, loops, functions, and a VS Code extension.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCS -->
+<section id="docs">
+  <div class="section-label">Documentation</div>
+  <h2 class="section-title">Learn MyLang<br>in Minutes</h2>
+  <p class="section-sub">Everything you need to start writing MyLang programs today.</p>
+
+  <div class="docs-grid">
+    <div class="docs-nav">
+      <div class="docs-nav-title">On this page</div>
+      <a class="docs-nav-item active" onclick="scrollTo('install')">Installation</a>
+      <a class="docs-nav-item" onclick="scrollTo('first')">Your First Program</a>
+      <a class="docs-nav-item" onclick="scrollTo('commands')">Commands Reference</a>
+      <a class="docs-nav-item" onclick="scrollTo('variables')">Variables</a>
+      <a class="docs-nav-item" onclick="scrollTo('input')">User Input</a>
+    </div>
+
+    <div class="docs-content">
+
+      <div class="doc-section" id="install">
+        <h3>Installation <span class="tag">Windows</span></h3>
+        <p>MyLang runs on Windows. Follow these steps to install it as a system command.</p>
+        <div class="doc-code">
+          <div class="doc-code-header"><span>Step 1 — Install PyInstaller</span></div>
+          <pre><span style="color:var(--blue)">pip</span> install pyinstaller</pre>
+        </div>
+        <div class="doc-code">
+          <div class="doc-code-header"><span>Step 2 — Build the EXE</span></div>
+          <pre><span style="color:var(--blue)">pyinstaller</span> --onefile --clean main.py</pre>
+        </div>
+        <div class="doc-code">
+          <div class="doc-code-header"><span>Step 3 — Install (Admin PowerShell)</span></div>
+          <pre><span style="color:var(--blue)">Copy-Item</span> <span style="color:var(--green)">"dist\main.exe"</span> <span style="color:var(--green)">"C:\Windows\System32\mylang.exe"</span> -Force</pre>
+        </div>
+        <p>After installation, <code style="color:var(--code);font-family:monospace;font-size:13px">mylang</code> works from any terminal on your computer.</p>
+      </div>
+
+      <div class="doc-section" id="first">
+        <h3>Your First Program <span class="tag">Beginner</span></h3>
+        <p>Create a file called <code style="color:var(--code);font-family:monospace;font-size:13px">hello.my</code> and write your first MyLang program:</p>
+        <div class="doc-code">
+          <div class="doc-code-header"><span>hello.my</span></div>
+          <pre><span style="color:var(--blue)">say</span> <span style="color:var(--green)">"Welcome to MyLang!"</span></pre>
+        </div>
+        <p>Run it from any terminal:</p>
+        <div class="doc-code">
+          <div class="doc-code-header"><span>Terminal</span></div>
+          <pre><span style="color:var(--cyan)">mylang</span> hello.my</pre>
+        </div>
+        <div class="doc-code">
+          <div class="doc-code-header"><span>Output</span><span style="color:var(--green)">✓ Success</span></div>
+          <pre style="color:var(--green)">Welcome to MyLang!</pre>
+        </div>
+      </div>
+
+      <div class="doc-section" id="commands">
+        <h3>Commands Reference <span class="tag">v1.0</span></h3>
+        <p>MyLang v1.0 includes 3 core commands:</p>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>Syntax</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>say</code></td>
+              <td><code>say "text"</code> or <code>say varname</code></td>
+              <td style="color:var(--muted)">Prints text or a variable to the screen</td>
+            </tr>
+            <tr>
+              <td><code>set</code></td>
+              <td><code>set name = "value"</code></td>
+              <td style="color:var(--muted)">Creates a variable and stores a value</td>
+            </tr>
+            <tr>
+              <td><code>ask</code></td>
+              <td><code>ask var "prompt"</code></td>
+              <td style="color:var(--muted)">Asks the user for input and saves it</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="doc-section" id="variables">
+        <h3>Variables <span class="tag">set</span></h3>
+        <p>Use <code style="color:var(--code);font-family:monospace;font-size:13px">set</code> to store any value in a variable. Then use the variable name with <code style="color:var(--code);font-family:monospace;font-size:13px">say</code>.</p>
+        <div class="doc-code">
+          <div class="doc-code-header"><span>variables.my</span></div>
+          <pre><span style="color:var(--blue)">set</span> <span style="color:var(--cyan)">name</span> = <span style="color:var(--green)">"Ayesha"</span>
+<span style="color:var(--blue)">set</span> <span style="color:var(--cyan)">city</span> = <span style="color:var(--green)">"Lahore"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">name</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">city</span></pre>
+        </div>
+        <div class="doc-code">
+          <div class="doc-code-header"><span>Output</span><span style="color:var(--green)">✓</span></div>
+          <pre style="color:var(--green)">Ayesha
+Lahore</pre>
+        </div>
+      </div>
+
+      <div class="doc-section" id="input">
+        <h3>User Input <span class="tag">ask</span></h3>
+        <p>Use <code style="color:var(--code);font-family:monospace;font-size:13px">ask</code> to get input from the user at runtime. The first word after <code style="color:var(--code);font-family:monospace;font-size:13px">ask</code> is the variable name, and the text in quotes is the prompt shown to the user.</p>
+        <div class="doc-code">
+          <div class="doc-code-header"><span>greet.my</span></div>
+          <pre><span style="color:var(--blue)">ask</span> <span style="color:var(--cyan)">name</span> <span style="color:var(--green)">"What is your name? "</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"Hello, "</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">name</span></pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CHALLENGES -->
+<section id="challenges">
+  <div class="section-label">Practice</div>
+  <h2 class="section-title">MyLang<br>Challenges</h2>
+  <p class="section-sub">Test your skills with these exercises. Click "Show Solution" when you're ready.</p>
+
+  <div class="challenges-grid">
+
+    <!-- Challenge 1 -->
+    <div class="challenge-card">
+      <div class="challenge-header">
+        <span class="challenge-num">CHALLENGE #01</span>
+        <span class="badge badge-easy">Easy</span>
+      </div>
+      <div class="challenge-title">Hello World</div>
+      <div class="challenge-desc">The classic first program. Every programmer starts here. Can you do it in MyLang?</div>
+      <div class="challenge-task">
+        <div class="challenge-task-label">Your Task</div>
+        <p>Print the text <strong>"Hello, World!"</strong> to the screen.</p>
+      </div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">
+        <span class="arrow">▶</span> Show Solution
+      </button>
+      <div class="solution-body">
+        <pre><span style="color:var(--blue)">say</span> <span style="color:var(--green)">"Hello, World!"</span></pre>
+        <p style="font-size:13px;color:var(--muted);margin-top:12px">Run it: <code style="color:var(--cyan);font-family:monospace">mylang hello.my</code></p>
+      </div>
+    </div>
+
+    <!-- Challenge 2 -->
+    <div class="challenge-card">
+      <div class="challenge-header">
+        <span class="challenge-num">CHALLENGE #02</span>
+        <span class="badge badge-easy">Easy</span>
+      </div>
+      <div class="challenge-title">Personal Introduction</div>
+      <div class="challenge-desc">Use variables to store your information and print a personal introduction.</div>
+      <div class="challenge-task">
+        <div class="challenge-task-label">Your Task</div>
+        <p>Store your <strong>name</strong>, <strong>city</strong>, and <strong>job</strong> in variables. Then print all three.</p>
+      </div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">
+        <span class="arrow">▶</span> Show Solution
+      </button>
+      <div class="solution-body">
+        <pre><span style="color:var(--blue)">set</span> <span style="color:var(--cyan)">name</span> = <span style="color:var(--green)">"Ayesha"</span>
+<span style="color:var(--blue)">set</span> <span style="color:var(--cyan)">city</span> = <span style="color:var(--green)">"Lahore"</span>
+<span style="color:var(--blue)">set</span> <span style="color:var(--cyan)">job</span> = <span style="color:var(--green)">"Product Manager"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">name</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">city</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">job</span></pre>
+      </div>
+    </div>
+
+    <!-- Challenge 3 -->
+    <div class="challenge-card">
+      <div class="challenge-header">
+        <span class="challenge-num">CHALLENGE #03</span>
+        <span class="badge badge-medium">Medium</span>
+      </div>
+      <div class="challenge-title">Interactive Greeter</div>
+      <div class="challenge-desc">Make your program talk TO the user, not just print static text. Use the ask command.</div>
+      <div class="challenge-task">
+        <div class="challenge-task-label">Your Task</div>
+        <p>Ask the user for their <strong>name</strong> and <strong>favorite color</strong>. Then greet them using both.</p>
+      </div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">
+        <span class="arrow">▶</span> Show Solution
+      </button>
+      <div class="solution-body">
+        <pre><span style="color:var(--blue)">ask</span> <span style="color:var(--cyan)">name</span> <span style="color:var(--green)">"What is your name? "</span>
+<span style="color:var(--blue)">ask</span> <span style="color:var(--cyan)">color</span> <span style="color:var(--green)">"What is your favorite color? "</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"Nice to meet you,"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">name</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"Your favorite color is:"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">color</span></pre>
+      </div>
+    </div>
+
+    <!-- Challenge 4 -->
+    <div class="challenge-card">
+      <div class="challenge-header">
+        <span class="challenge-num">CHALLENGE #04</span>
+        <span class="badge badge-medium">Medium</span>
+      </div>
+      <div class="challenge-title">Mini Profile Card</div>
+      <div class="challenge-desc">Combine everything you know to build a complete interactive profile program.</div>
+      <div class="challenge-task">
+        <div class="challenge-task-label">Your Task</div>
+        <p>Ask for <strong>name, age, city,</strong> and <strong>hobby</strong>. Print a formatted profile with labels.</p>
+      </div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">
+        <span class="arrow">▶</span> Show Solution
+      </button>
+      <div class="solution-body">
+        <pre><span style="color:var(--blue)">ask</span> <span style="color:var(--cyan)">name</span> <span style="color:var(--green)">"Your name: "</span>
+<span style="color:var(--blue)">ask</span> <span style="color:var(--cyan)">age</span> <span style="color:var(--green)">"Your age: "</span>
+<span style="color:var(--blue)">ask</span> <span style="color:var(--cyan)">city</span> <span style="color:var(--green)">"Your city: "</span>
+<span style="color:var(--blue)">ask</span> <span style="color:var(--cyan)">hobby</span> <span style="color:var(--green)">"Your hobby: "</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"--- Your Profile ---"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"Name:"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">name</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"Age:"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">age</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"City:"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">city</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"Hobby:"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">hobby</span></pre>
+      </div>
+    </div>
+
+    <!-- Challenge 5 -->
+    <div class="challenge-card">
+      <div class="challenge-header">
+        <span class="challenge-num">CHALLENGE #05</span>
+        <span class="badge badge-hard">Hard</span>
+      </div>
+      <div class="challenge-title">Welcome Screen</div>
+      <div class="challenge-desc">Build a polished welcome screen for a fictional app using only MyLang v1.0 commands.</div>
+      <div class="challenge-task">
+        <div class="challenge-task-label">Your Task</div>
+        <p>Create a welcome screen that shows an <strong>app name</strong>, asks for <strong>username</strong>, then shows a <strong>personalized welcome message</strong> with the app name and username together.</p>
+      </div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">
+        <span class="arrow">▶</span> Show Solution
+      </button>
+      <div class="solution-body">
+        <pre><span style="color:var(--blue)">set</span> <span style="color:var(--cyan)">app</span> = <span style="color:var(--green)">"SchoolMate"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"========================"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">app</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"Your smart school helper"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"========================"</span>
+<span style="color:var(--blue)">ask</span> <span style="color:var(--cyan)">user</span> <span style="color:var(--green)">"Enter your username: "</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"Welcome back,"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">user</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--green)">"Glad to have you in"</span>
+<span style="color:var(--blue)">say</span> <span style="color:var(--cyan)">app</span></pre>
+      </div>
+    </div>
+
+    <!-- Challenge 6 -->
+    <div class="challenge-card">
+      <div class="challenge-header">
+        <span class="challenge-num">CHALLENGE #06</span>
+        <span class="badge badge-hard">Hard</span>
+      </div>
+      <div class="challenge-title">Coming Soon 🔒</div>
+      <div class="challenge-desc">This challenge will unlock with MyLang v2.0 featuring <strong>if/else</strong> conditions and <strong>repeat</strong> loops.</div>
+      <div class="challenge-task">
+        <div class="challenge-task-label">Preview</div>
+        <p>Build a number guessing game using <code style="color:var(--code);font-family:monospace">if</code>, <code style="color:var(--code);font-family:monospace">repeat</code>, and <code style="color:var(--code);font-family:monospace">ask</code>.</p>
+      </div>
+      <button class="solution-toggle" style="opacity:0.4;cursor:not-allowed">
+        <span class="arrow">▶</span> Available in v2.0
+      </button>
+      <div class="solution-body"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">My<span>Lang</span></div>
+  <div class="footer-text">Built with ❤️ by <strong>Ayesha Majid</strong> — MyLang v1.0 — 2026</div>
+  <div class="footer-text" style="font-family:'Space Mono',monospace;font-size:12px;color:var(--blue)">mylang file.my</div>
+</footer>
+
+<script>
+function toggleSolution(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('show');
+  body.classList.toggle('show', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  btn.querySelector('span:last-child') && (btn.lastChild.textContent = isOpen ? ' Show Solution' : ' Hide Solution');
+  const textNode = [...btn.childNodes].find(n => n.nodeType === 3);
+  if (textNode) textNode.textContent = isOpen ? ' Show Solution' : ' Hide Solution';
+}
+
+// Active nav highlight
+const navItems = document.querySelectorAll('.docs-nav-item');
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    navItems.forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
